@@ -1,0 +1,82 @@
+================================================================================
+QUICK M-PESA SETUP GUIDE
+================================================================================
+
+You need to replace 3 placeholder values in config/mpesa.php with your actual
+credentials from Safaricom Developer Portal.
+
+================================================================================
+STEP 1: Get Your Credentials
+================================================================================
+
+1. Go to: https://developer.safaricom.co.ke/
+2. Sign up or log in
+3. Create a new app (select "M-Pesa Express" API)
+4. Copy these 3 values from your app dashboard:
+   - Consumer Key
+   - Consumer Secret (click "Show" to reveal)
+   - Passkey
+
+================================================================================
+STEP 2: Edit config/mpesa.php
+================================================================================
+
+Open: config/mpesa.php
+
+Find these 3 lines (around lines 67, 68, and 74):
+
+    'consumer_key'      => getenv('MPESA_CONSUMER_KEY') ?: 'YOUR_CONSUMER_KEY',
+    'consumer_secret'   => getenv('MPESA_CONSUMER_SECRET') ?: 'YOUR_CONSUMER_SECRET',
+    'passkey'           => getenv('MPESA_PASSKEY') ?: 'YOUR_PASSKEY',
+
+Replace with your actual values. Example:
+
+    'consumer_key'      => getenv('MPESA_CONSUMER_KEY') ?: 'abc123xyz456def789',
+    'consumer_secret'   => getenv('MPESA_CONSUMER_SECRET') ?: 'xyz789abc123def456',
+    'passkey'           => getenv('MPESA_PASSKEY') ?: 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
+
+IMPORTANT: Keep the quotes and replace only the text between quotes!
+
+================================================================================
+STEP 3: For Localhost Testing (Optional)
+================================================================================
+
+If testing on localhost, you need to expose your server publicly:
+
+1. Install ngrok: https://ngrok.com/download
+2. Start XAMPP
+3. Run: ngrok http 80
+4. Copy the HTTPS URL (e.g., https://abc123.ngrok.io)
+5. Update the callback_url in config/mpesa.php:
+
+   'callback_url' => 'https://abc123.ngrok.io/tosha_system/stk_callback.php',
+
+================================================================================
+WHAT THE VALUES LOOK LIKE
+================================================================================
+
+Consumer Key:     Usually 20-30 characters (letters and numbers)
+Consumer Secret:  Usually 20-30 characters (letters and numbers)
+Passkey:          Usually 64+ characters (long string)
+
+Example Consumer Key:    "Iqk7XQvFJGDN8O0F..."
+Example Consumer Secret:  "YOUR_CONSUMER_SECRET" (click Show button)
+Example Passkey:          "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+
+================================================================================
+VERIFICATION
+================================================================================
+
+After updating, the error should disappear and you should be able to:
+- Click the M-Pesa payment button
+- See "Sending M-Pesa STK push..." message
+- Receive the payment prompt on your test phone
+
+================================================================================
+NEED HELP?
+================================================================================
+
+See MPESA_SETUP.md for detailed instructions with screenshots and troubleshooting.
+
+================================================================================
+
